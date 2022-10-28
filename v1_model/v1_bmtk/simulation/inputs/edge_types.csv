@@ -1,0 +1,9 @@
+edge_type_id target_query source_query model_template syn_weight delay dynamics_params
+100 pop_name=='Scnn1a' ei=='e' static_synapse 3.0 2.0 ExcToExc.json
+101 pop_name=='LIF_exc' ei=='e' static_synapse 3.0 2.0 instantaneousExc.json
+102 pop_name=='PV' ei=='i' static_synapse -3.0 2.0 InhToInh.json
+103 ei=='i'&pop_name=='LIF_inh' ei=='i' static_synapse -3.0 2.0 instantaneousInh.json
+104 ei=='e'&pop_name=='Scnn1a' ei=='i' static_synapse -3.0 2.0 InhToExc.json
+105 ei=='e'&pop_name=='LIF_exc' ei=='i' static_synapse -3.0 2.0 instantaneousInh.json
+106 pop_name=='PV' ei=='e' static_synapse 6.0 2.0 ExcToInh.json
+107 pop_name=='LIF_inh' ei=='e' static_synapse 3.0 2.0 instantaneousExc.json

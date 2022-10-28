@@ -1,0 +1,5 @@
+edge_type_id target_query source_query model_template syn_weight delay dynamics_params
+100 pop_name=='Scnn1a' * static_synapse 15.0 2.0 ExcToExc.json
+101 pop_name=='PV' * static_synapse 6.0 2.0 ExcToInh.json
+102 pop_name=='LIF_exc' * static_synapse 10.0 2.0 instantaneousExc.json
+103 pop_name=='LIF_inh' * static_synapse 10.0 2.0 instantaneousExc.json

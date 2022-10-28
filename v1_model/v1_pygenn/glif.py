@@ -6,11 +6,12 @@ from pygenn.genn_model import (create_custom_neuron_class,
 from os import path
 from pygenn.genn_wrapper import NO_DELAY
 
+
 """
 VARIABLE DESCRITPIONS:
 
 V(t) = Membrane Potential
-I_j(t) = After-spike currents
+I_j(t) =   After-spike currents
 Theta_s(t) = Spike-dependent threshold component
 Theta_v(t) = Voltage-dependent threshold component
 
@@ -33,15 +34,13 @@ b_v = Voltage-induced threshold time constant                   <-      Prespike
 
 """
 
-
-
 glif1 = create_custom_neuron_class(
     "GLIF1", # Or simply LIF
 
     param_names=["C", "G", "E_L", "I_e", "Vthr", "Vreset"],    # Vthr = Theta inf
     var_name_types=[("V", "scalar"), ("SpikeCount", "unsigned int")],
     sim_code = "$(V) += (1/$(C)*($(I_e) - $(G)*( $(V) - $(E_L)))) * DT;",
-    threshold_condition_code="$(V) >= $(Vthr)",
+    threshold_condition_code="$(V) > $(Vthr)",
     reset_code= """
     $(V) = $(Vreset);    
     $(SpikeCount)++;
@@ -52,36 +51,35 @@ glif2 = create_custom_neuron_class(
     "GLIF2", # Also called LIF-R (biologically defined reset rules)
     
     param_names=["C", "G", "E_L", "I_e", "Vthr", "Vrest", "f_v", "dO", "dV", "b"],
-    var_name_types=[("V", "scalar"), ("O", "scalar"), ("SpikeCount", "unsigned int")],
+    var_name_types=[("V", "scalar"), ("Theta", "scalar"), ("SpikeCount", "unsigned int")],
     sim_code = """
-    $(V) += (1/$(C)*($(I_e) - $(G)*( $(V) - $(E_L)))) * DT;
-    $(O) += (-$(b) * $(O)) * DT;    
+    $(V) += (1/$(C) * ($(I_e) - $(G) * ($(V) - $(E_L)))) * DT;
+    $(theta) += (-$(b) * $(theta)) * DT;    
     """,
-    threshold_condition_code="$(V) >= $(Vthr) + $(O)",
+    threshold_condition_code="$(V) >= $(Vthr) + $(theta)",
     reset_code= """
     $(V) = $(E_L) + $(f_v) * ($(V) - $(E_L)) - $(dV);
-    $(O) = $(O) + $(dO);
-    $(SpikeCount)++;
+    $(theta) = $(theta) + $(dTheta);
+    $(SpikeCount)++;    
     """
 )
 
 glif3 = create_custom_neuron_class(
     "GLIF3", # Also called LIF-ASC (LIF with after-spike current)
 
-    # TODO: Add Summation into simulation code. 
 
     param_names=["C", "G", "E_L", "I_e", "Vthr", "Vrest", "k_j", "R_j", "A_j"],
-    var_name_types=[("V", "scalar"), ("I_j", "scalar"), ("SpikeCount", "unsigned int")],
-    sim_code = """    
-    $(I_j) += 
+    var_name_types=[("V", "scalar"), ("I_j", "scalar"), ("SpikeCount", "unsigned int"), ("f_v", "unsigned int"), ("dV", "scalar"), ("O", 'unsigned int'), ("dO", "unsigned int")],
+    sim_code = """     
+    $(I_j) = -$(I_j)
     $(V) += (1/$(C)*($(I_e) - $(G)*( $(V) - $(E_L)))) * DT;
     """,
-    threshold_condition_code="$(V) >= $(Vthr) + $(O)",
+    threshold_condition_code="$(V) >= $(Vthr) + $(k_j)",
     reset_code= """
     $(V) = $(E_L) + $(f_v) * ($(V) - $(E_L)) - $(dV);
     $(O) = $(O) + $(dO);
-    $(SpikeCount)++;
-    """
+    $(SpikeCount)++;    
+    """ 
 )
 
 glif4 = create_custom_neuron_class(
@@ -160,6 +158,10 @@ glif3_params = {"C": 1.0, "G": 10.0, "Vrest": -49.0, "R_j": 1.0,
 glif3_init = {"V": init_var("Uniform", {"min": -60.0, "max": -50.0}),
             "O": init_var("Uniform", {"min": 10, "max": 20}),
             "SpikeCount": 0}   
+
+glif3_params = {'A_j': 1, 'C': 1, 'E_L': 0.55, 'G': 0.24, 'I_e': 1, 'R_j': 0.5, 'Vrest': -55, 'Vthr': -70, 'k_j': 1}
+
+glif3_init = {'I_j': 1, 'SpikeCount': 1, 'V': 1, "O": 1, "dO": 0.001, "dV":0.005, "f_v":1}
 
 # ====================================== GLIF 3 ====================================== # 
 

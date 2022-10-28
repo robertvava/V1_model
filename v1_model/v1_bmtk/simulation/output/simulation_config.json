@@ -1,0 +1,45 @@
+{
+  "target_simulator": "NEST",
+  "run": {
+    "tstart": 0.0,
+    "tstop": 3000.0,
+    "dt": 0.01
+  },
+  "inputs": {
+    "LGN_spikes": {
+      "input_type": "spikes",
+      "module": "sonata",
+      "input_file": "/home/robertvava/Desktop/CodeSpace/v1_model/v1_model/v1_bmtk/simulation/inputs/lgn_spikes.h5",
+      "node_set": "LGN"
+    },
+    "exc_perturbation": {
+      "input_type": "current_clamp",
+      "module": "IClamp",
+      "node_set": {
+        "population": "V1",
+        "pop_name": "PV"
+      },
+      "amp": 400.0,
+      "delay": 1500.0,
+      "duration": 500.0
+    }
+  },
+  "output": {
+    "log_file": "/home/robertvava/Desktop/CodeSpace/v1_model/v1_model/v1_bmtk/simulation/output/log.txt",
+    "output_dir": "/home/robertvava/Desktop/CodeSpace/v1_model/v1_model/v1_bmtk/simulation/output",
+    "spikes_file": "/home/robertvava/Desktop/CodeSpace/v1_model/v1_model/v1_bmtk/simulation/output/spikes.h5",
+    "quiet_simulator": true
+  },
+  "reports": {},
+  "node_sets_file": "/home/robertvava/Desktop/CodeSpace/v1_model/v1_model/v1_bmtk/simulation/node_sets.json",
+  "config_path": "/home/robertvava/Desktop/CodeSpace/v1_model/v1_model/v1_bmtk/simulation/simulation_config.json",
+  "config_dir": "/home/robertvava/Desktop/CodeSpace/v1_model/v1_model/v1_bmtk/simulation",
+  "node_sets": {
+    "biophysical_nodes": {
+      "model_type": "biophysical"
+    },
+    "point_nodes": {
+      "model_type": "point_process"
+    }
+  }
+}

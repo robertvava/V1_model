@@ -1,0 +1,2 @@
+2022-10-27 19:14:31,689 [INFO] Created log file
+2022-10-27 19:14:31,689 [ERROR] Could not find any network files. Unable to build network.
