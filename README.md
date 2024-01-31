@@ -1,8 +1,8 @@
 <big>A computational model of the mouse primary visual area (V1) with 4 types of Generalised Leaky Integrate and Fire neurons.</big>
 
-Recreating the mouse primary visual area (V1) using biophysically detailed neuron models. 
+Recreating the Allen Institute's V1 model with PyGeNN ([https://genn-team.github.io/genn/documentation/4/html/d0/d81/PyGeNN.html](PyGeNN)). 
 
-The glif neuron parameters can be found in glif.py as follows: 
+The glif neuron parameters can be found in the folder v1_pygenn, in glif.py as follows: 
 
 
 
