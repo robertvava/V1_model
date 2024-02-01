@@ -17,8 +17,8 @@ Theta_v(t) = Voltage-dependent threshold component
 
 PARAMTER DESCRIPTIONS:                                                  FIT FROM:  
 
-C = Capacitance                                                 <-      Sub-threshold nosie
-R = Membrane Resistance                                         <-      Sub-threshold nosie
+C = Capacitance                                                 <-      Sub-threshold noise
+R = Membrane Resistance                                         <-      Sub-threshold noise
 E_L = Resting Potential                                         <-      Resting V before noise
 Theta_inf = Instantaneous Threshold                             <-      Short Square input
 delta t = Spike cut length                                      <-      All noise spikes
